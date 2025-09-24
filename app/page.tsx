@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Services from "@/components/Services";
 import { motion } from "framer-motion";
+import { InlineWidget } from "react-calendly";
 
 export default function Home() {
   return (
@@ -452,37 +453,30 @@ export default function Home() {
             Ready to discuss your project? Let&apos;s schedule a call and bring your vision to life with modern web solutions.
           </p>
           
-          <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 max-w-2xl mx-auto">
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors"
-                />
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors"
-                />
-              </div>
-              <input
-                type="text"
-                placeholder="Project Type"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors"
-              />
-              <textarea
-                placeholder="Tell us about your project..."
-                rows={4}
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-white transition-colors resize-none"
-              ></textarea>
-              <button
-                type="submit"
-                className="w-full bg-white text-black py-4 rounded-lg hover:bg-gray-200 transition-colors font-medium text-lg"
-              >
-                Schedule Call
-              </button>
-            </form>
+          <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-4 max-w-4xl mx-auto">
+            <InlineWidget 
+              url="https://calendly.com/blueobsidian196/30min" 
+              styles={{
+                height: '700px',
+                borderRadius: '12px'
+              }}
+            />
+          </div>
+          
+          {/* Alternative Contact Info */}
+          <div className="mt-8 text-center">
+            <p className="text-gray-400 mb-4">Prefer a different way to connect?</p>
+            <div className="flex justify-center space-x-6">
+              <a href="mailto:blueobsidian196@gmail.com" className="text-gray-300 hover:text-white transition-colors">
+                📧 Email
+              </a>
+              <a href="https://linkedin.com/in/blueobsidian" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                💼 LinkedIn
+              </a>
+              <a href="https://github.com/Emmanuek5" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
+                🔗 GitHub
+              </a>
+            </div>
           </div>
         </div>
       </section>
