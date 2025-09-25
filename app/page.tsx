@@ -1,14 +1,21 @@
 "use client";
 import Image from "next/image";
 import Services from "@/components/Services";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { InlineWidget } from "react-calendly";
+import { containerStagger, slideInFrom, fadeInUp, scaleIn } from "@/lib/motion";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground enhanced-bg">
       {/* Navigation */}
-      <nav className="fixed left-0 right-0 top-[20px] rounded-full w-[80%] z-50 bg-background/80 backdrop-blur-sm border-b border-gray-800 mx-auto">
+      <m.nav
+        className="fixed left-0 right-0 top-[20px] rounded-full w-[80%] z-50 bg-background/80 backdrop-blur-sm border-b border-gray-800 mx-auto"
+        variants={slideInFrom("up")}
+        initial="hidden"
+        animate="show"
+        transition={{ duration: 0.7 }}
+      >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
@@ -34,7 +41,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </nav>
+      </m.nav>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
@@ -74,15 +81,19 @@ export default function Home() {
                filter: 'blur(0.5px)'
              }}>
         </div>
+
+        {/* Cloud overlay */}
+        <div className="clouds"></div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <m.div
+          variants={containerStagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center"
+        >
           {/* LEFT: Text */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-left max-w-xl"
-          >
+          <m.div variants={slideInFrom("left")} className="text-left max-w-xl">
             <div className="text-sm font-mono text-gray-400 mb-4 tracking-widest">
               WEB DEVELOPMENT AGENCY
             </div>
@@ -111,32 +122,27 @@ export default function Home() {
                 </button>
               </a>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* RIGHT: Image */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-            className="flex justify-center lg:justify-end"
-          >
+          <m.div variants={slideInFrom("right", 0.1)} className="flex justify-center lg:justify-end">
             <Image
               src="/globe.png" // <-- replace with your PNG/SVG illustration
               alt="Digital Globe Illustration"
               width={500}
               height={500}
-              className="max-w-[90%] lg:max-w-lg drop-shadow-2xl"
+              className="max-w-[90%] lg:max-w-lg drop-shadow-2xl float-animation"
               priority
             />
-          </motion.div>
-        </div>
+          </m.div>
+        </m.div>
       </section>
       {/* Services Section */}
       <Services />
 
 
       {/* Team Section */}
-      <section id="team" className="py-20 px-6 bg-gray-950/50 relative overflow-hidden">
+      <section id="team" className="py-20 px-6 bg-gray-950/50 relative overflow-hidden section-bg">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/20 via-transparent to-gray-800/20"></div>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
@@ -144,12 +150,7 @@ export default function Home() {
         
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
+            <m.div variants={fadeInUp(0)} initial="hidden" whileInView="show" viewport={{ once: true }}>
               <h2 className="detached-header text-4xl md:text-5xl font-bold mb-6">
                 Meet the 
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 block">
@@ -159,15 +160,15 @@ export default function Home() {
               <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
                 The creative force behind cloven.dev&apos;s innovative digital solutions
               </p>
-            </motion.div>
+            </m.div>
           </div>
           
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Profile Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+            <m.div
+              variants={slideInFrom("left")}
+              initial="hidden"
+              whileInView="show"
               viewport={{ once: true }}
               className="flex justify-center lg:justify-end"
             >
@@ -211,13 +212,13 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* Skills & Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+            <m.div
+              variants={slideInFrom("right", 0.1)}
+              initial="hidden"
+              whileInView="show"
               viewport={{ once: true }}
               className="space-y-8"
             >
@@ -265,25 +266,20 @@ export default function Home() {
                   <div className="text-sm text-gray-400">Available</div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-6 relative overflow-hidden">
+      <section id="about" className="py-20 px-6 relative overflow-hidden section-bg">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950/50 to-transparent"></div>
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
         
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
+            <m.div variants={fadeInUp(0)} initial="hidden" whileInView="show" viewport={{ once: true }}>
               <h2 className="detached-header text-4xl md:text-5xl font-bold mb-6">
                 Crafting Digital
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 block">
@@ -294,16 +290,19 @@ export default function Home() {
                 Where innovation meets execution. We transform ideas into powerful digital experiences 
                 that drive results and exceed expectations.
               </p>
-            </motion.div>
+            </m.div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+          <m.div
+            variants={containerStagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid lg:grid-cols-3 gap-8 mb-16"
+          >
             {/* Core Values */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
+            <m.div
+              variants={scaleIn}
               className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-all duration-300 group"
             >
               <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -314,13 +313,10 @@ export default function Home() {
                 We stay ahead of the curve, implementing cutting-edge technologies and methodologies 
                 to deliver solutions that set new standards.
               </p>
-            </motion.div>
+            </m.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
+            <m.div
+              variants={scaleIn}
               className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-all duration-300 group"
             >
               <div className="w-12 h-12 bg-gray-300 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -331,13 +327,10 @@ export default function Home() {
                 Every line of code is crafted with precision. We believe in building robust, 
                 scalable solutions that stand the test of time.
               </p>
-            </motion.div>
+            </m.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
+            <m.div
+              variants={scaleIn}
               className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8 hover:border-gray-700 transition-all duration-300 group"
             >
               <div className="w-12 h-12 bg-gray-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -348,17 +341,12 @@ export default function Home() {
                 Your success is our success. We work closely with you to understand your vision 
                 and deliver solutions that exceed your expectations.
               </p>
-            </motion.div>
-          </div>
+            </m.div>
+          </m.div>
 
           {/* Stats & Process */}
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
+            <m.div variants={slideInFrom("left")} initial="hidden" whileInView="show" viewport={{ once: true }}>
               <h3 className="text-3xl font-bold mb-8 text-white">Our Approach</h3>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
@@ -389,12 +377,12 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+            <m.div
+              variants={slideInFrom("right", 0.1)}
+              initial="hidden"
+              whileInView="show"
               viewport={{ once: true }}
               className="relative"
             >
@@ -440,20 +428,28 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-6">
+      <section id="contact" className="py-20 px-6 section-bg">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="detached-header text-3xl md:text-4xl font-bold mb-4">Book a Call</h2>
-          <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto">
-            Ready to discuss your project? Let&apos;s schedule a call and bring your vision to life with modern web solutions.
-          </p>
+          <m.div variants={fadeInUp(0)} initial="hidden" whileInView="show" viewport={{ once: true }}>
+            <h2 className="detached-header text-3xl md:text-4xl font-bold mb-4">Book a Call</h2>
+            <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto">
+              Ready to discuss your project? Let&apos;s schedule a call and bring your vision to life with modern web solutions.
+            </p>
+          </m.div>
           
-          <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-4 max-w-4xl mx-auto">
+          <m.div
+            variants={scaleIn}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="bg-gray-900/50 border border-gray-800 rounded-2xl p-4 max-w-4xl mx-auto"
+          >
             <InlineWidget 
               url="https://calendly.com/blueobsidian196/30min" 
               styles={{
@@ -461,10 +457,10 @@ export default function Home() {
                 borderRadius: '12px'
               }}
             />
-          </div>
+          </m.div>
           
           {/* Alternative Contact Info */}
-          <div className="mt-8 text-center">
+          <m.div className="mt-8 text-center" variants={fadeInUp(0.1)} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <p className="text-gray-400 mb-4">Prefer a different way to connect?</p>
             <div className="flex justify-center space-x-6">
               <a href="mailto:blueobsidian196@gmail.com" className="text-gray-300 hover:text-white transition-colors">
@@ -477,7 +473,7 @@ export default function Home() {
                 🔗 GitHub
               </a>
             </div>
-          </div>
+          </m.div>
         </div>
       </section>
 

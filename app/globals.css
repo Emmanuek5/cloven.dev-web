@@ -277,3 +277,94 @@ body::after {
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
   filter: blur(1px);
 }
+
+/* Cloud-like animated background for hero */
+.clouds {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1; /* behind content (which is z-10 in hero), above base layers */
+  opacity: 0.5;
+  filter: blur(32px) saturate(105%);
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 20%, black 65%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 20%, black 65%);
+}
+
+.clouds::before,
+.clouds::after {
+  content: '';
+  position: absolute;
+  inset: -10%; /* allow drift without clipping */
+  background-repeat: no-repeat;
+}
+
+/* Layer 1 - larger soft puffs */
+.clouds::before {
+  background-image:
+    radial-gradient(120px 80px at 85% 30%, rgba(255,255,255,0.20) 0% 60%, transparent 61%),
+    radial-gradient(180px 100px at 70% 10%, rgba(255,255,255,0.12) 0% 60%, transparent 61%),
+    radial-gradient(160px 120px at 95% 60%, rgba(255,255,255,0.16) 0% 60%, transparent 61%),
+    radial-gradient(180px 120px at 75% 70%, rgba(255,255,255,0.14) 0% 60%, transparent 61%),
+    radial-gradient(140px 90px at 60% 40%, rgba(255,255,255,0.12) 0% 60%, transparent 61%);
+  background-size: 120% 100%, 120% 100%, 120% 100%, 120% 100%, 120% 100%;
+  animation: clouds-drift-1 80s linear infinite;
+}
+
+/* Layer 2 - smaller wisps moving at a different speed */
+.clouds::after {
+  opacity: 0.7;
+  background-image:
+    radial-gradient(90px 60px at 80% 35%, rgba(255,255,255,0.18) 0% 60%, transparent 61%),
+    radial-gradient(110px 80px at 65% 15%, rgba(255,255,255,0.10) 0% 60%, transparent 61%),
+    radial-gradient(100px 70px at 90% 65%, rgba(255,255,255,0.14) 0% 60%, transparent 61%),
+    radial-gradient(120px 90px at 70% 75%, rgba(255,255,255,0.12) 0% 60%, transparent 61%);
+  background-size: 140% 100%, 140% 100%, 140% 100%, 140% 100%;
+  animation: clouds-drift-2 120s linear infinite;
+}
+
+@keyframes clouds-drift-1 {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-2%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes clouds-drift-2 {
+  0% { transform: translateX(2%); }
+  50% { transform: translateX(-1%); }
+  100% { transform: translateX(2%); }
+}
+
+/* Unified section background with subtle glows + animated grid */
+.section-bg {
+  position: relative;
+  z-index: 0;
+}
+
+.section-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 300px at 80% 10%, rgba(255,255,255,0.06), transparent 60%),
+    radial-gradient(400px 200px at 10% 80%, rgba(255,255,255,0.04), transparent 60%),
+    radial-gradient(500px 240px at 90% 70%, rgba(255,255,255,0.03), transparent 60%);
+  filter: blur(18px);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 100px 100px;
+  opacity: 0.15;
+  animation: grid-float 40s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
